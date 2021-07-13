@@ -55,7 +55,7 @@ while(winning):
         s.stop()
         continue
     else:
-        print("\nAh, sorry, try again!")
+        print("\nAh, sorry, better luck next time!")
         print(f"Your score was {score}! Nice job!\n")
         exit()
 
