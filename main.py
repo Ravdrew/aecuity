@@ -12,8 +12,8 @@ winning = True
 score = 0
 
 s = p.Server(duplex=1, buffersize=1024, winhost='asio',nchnls=2)
-s.setInputDevice(1)
-s.setOutputDevice(4)
+s.setInputDevice(1) #will vary for user
+s.setOutputDevice(4) #will vary for user
 s.boot()
 
 
