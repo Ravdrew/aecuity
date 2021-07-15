@@ -2,7 +2,7 @@
 COSMOS Cluster 5 Research Project - Training Hearing Impaired
 
 **Important Instructions:** 
-If you're getting an error that says something like **"Portaudio"...** then you need to change your audio input and output device on lines 15 and 16.
+If you're getting an error that says something like **"Portaudio"...** then you need to change your audio input and output device on lines 25 and 26.
 
 To do so:
 1. In another python file with pyo run function: **pa_list_devices()**
