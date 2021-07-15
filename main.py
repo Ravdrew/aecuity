@@ -3,6 +3,8 @@ import os
 import time
 import random as r
 
+f = open("presets.txt", "a")
+
 # setup
 
 directionValues = ((0.9, 0.1), (0.1, 0.9))  # left[left, right], right[left, right]
@@ -10,6 +12,7 @@ numToDirection = ("left", "right")
 sounds = ("recording1.wav", "decafCoffeeMonoFinal.wav", "recording3.wav")
 
 # set score
+
 with open("presets.txt", "r") as reader:  # opens file reader to pull saved score
     output = reader.readline()
 
