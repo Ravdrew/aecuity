@@ -41,11 +41,14 @@ while True:
     soundLeft = p.SfPlayer(sounds[selectedSound], loop=False)  # sets selected sound to be played
     soundRight = p.SfPlayer(sounds[selectedSound], loop=False)
 
-    noise = p.BrownNoise(.03).mix(2).out()
+    noiseVolume = 0.005 + score*0.001
+    if noiseVolume > 0.07:
+        noiseVolume = 0.07
+
+    noise = p.BrownNoise(noiseVolume).mix(2).out()
     mixer = p.Mixer(outs=2, chnls=1)  # sets 2 outputs
     mixer.addInput(voice=0, input=soundLeft)
     mixer.addInput(voice=1, input=soundRight)
-
 
     if direction == 0:  # sets volume for each side depending on direction
         mixer.setAmp(vin=0,vout=0,amp=directionValues[direction][0] - modifier)
