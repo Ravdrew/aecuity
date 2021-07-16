@@ -9,7 +9,9 @@ f = open("presets.txt", "a")
 
 directionValues = ((0.85, 0.15), (0.15, 0.85))  # left[left, right], right[left, right]
 numToDirection = ("left", "right")
-sounds = ("recording1.wav", "decafCoffeeMonoFinal.wav", "recording3.wav")
+sounds = ("plasticNoises.wav", "decafCoffeeMonoFinal.wav", "dogBark.wav", "pianoA.wav", "pianoB.wav", "pianoC.wav",
+          "pianoD.wav", "pianoE.wav", "pianoF.wav", "pianoG.wav", "sinkRunning.wav", "showerRunning.wav",
+          "gettingHome.wav", "longTimeNoSee.wav")
 
 # set score
 
@@ -33,7 +35,7 @@ s.boot()
 w = open("presets.txt", "w")  # opens file writer to save score
 
 while True:
-    selectedSound = r.randrange(0, 3, 1)  # selects sound to be played
+    selectedSound = r.randrange(0, 14, 1)  # selects sound to be played
     direction = r.randrange(0, 2, 1)  # selects direction
     modifier = r.uniform(0, 0.125)  # adds a little bit of variety in where the sound comes from
 
