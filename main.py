@@ -58,10 +58,8 @@ while True:
     if direction == 0:  # sets volume for each side depending on direction
         mixer.setAmp(vin=0,vout=0,amp=directionValues[direction][0] - modifier - difficultyVolume)
         mixer.setAmp(vin=1,vout=1,amp=directionValues[direction][1] + modifier + difficultyVolume)
-        print(directionValues[direction][1] + modifier + difficultyVolume)
     if direction == 1:
         mixer.setAmp(vin=0,vout=0,amp=directionValues[direction][0] + modifier + difficultyVolume)
-        print(directionValues[direction][0] + modifier + difficultyVolume)
         mixer.setAmp(vin=1,vout=1,amp=directionValues[direction][1] - modifier - difficultyVolume)
     mixer.out()
     s.start()
