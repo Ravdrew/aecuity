@@ -35,8 +35,12 @@ while True:
 
     soundPlayer = p.SfPlayer(sounds[selectedSound], loop=False)
     chBinaural = p.HRTF(soundPlayer, azimuth=directionValues[direction] + degreeModifier)
-    print(directionValues[direction] + degreeModifier)
 
+    noiseVolume = 0.005 + score*0.001
+    if noiseVolume > 0.07:
+        noiseVolume = 0.07
+
+    noise = p.BrownNoise(noiseVolume).mix(2).out()
     mixer = p.Mixer(outs=2,chnls=2)
     mixer.addInput(0,chBinaural)
     mixer.setAmp(0,0,0.9)
