@@ -68,4 +68,5 @@ while True:
     else:  # handles wrong answer
         print("\nAh, sorry, try again!")
         print(f"Your score was {score}! Nice job!\n")
+        s.stop()
         sys.exit()
