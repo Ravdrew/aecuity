@@ -1,5 +1,6 @@
 import pyo as p
 import random as r
+import sys
 
 f = open("presets.txt", "a")
 
@@ -26,7 +27,7 @@ s.setOutputDevice(4)
 s.boot()
 w = open("presets.txt", "w")
 
-s.amp = 0.4
+s.amp = 0.45
 
 while True:
     selectedSound = r.randrange(0, 22, 1)  # selects sound to be played
@@ -63,8 +64,8 @@ while True:
         w.write(str(score))
         w.close()
         s.stop()
-        exit()
+        sys.exit()
     else:  # handles wrong answer
         print("\nAh, sorry, try again!")
         print(f"Your score was {score}! Nice job!\n")
-        exit()
+        sys.exit()
