@@ -1,20 +1,14 @@
 import pyo as p
-import os
-import time
 import random as r
 
 f = open("presets.txt", "a")
 
-# setup
-
-directionValues = ((0.85, 0.15), (0.15, 0.85))  # left[left, right], right[left, right]
+directionValues = (-90, 90)  # left, right
 numToDirection = ("left", "right")
 sounds = ("plasticNoises.wav", "decafCoffeeMonoFinal.wav", "dogBark.wav", "pianoA.wav", "pianoB.wav", "pianoC.wav",
           "pianoD.wav", "pianoE.wav", "pianoF.wav", "pianoG.wav", "sinkRunning.wav", "showerRunning.wav",
           "gettingHome.wav", "longTimeNoSee.wav", "Hertz250.wav", "Hertz500.wav", "Hertz1000.wav", "Hertz2000.wav", "Hertz4000.wav",
-          "Hertz6000.wav", "Hertz8000.wav", "roomba.wav", "cars.wav")
-
-# set score
+          "Hertz6000.wav", "roomba.wav", "cars.wav")
 
 with open("presets.txt", "r") as reader:  # opens file reader to pull saved score
     output = reader.readline()
@@ -24,44 +18,27 @@ if output != "":
 else:
     score = 0
 print(f"Previous Score: {score}")
-# set score
 
-s = p.Server(duplex=1, buffersize=1024, winhost='asio',nchnls=2)  # settings for pyo server
+s = p.Server(duplex=1, buffersize=1024, winhost='asio',nchnls=2)
 s.setInputDevice(1)  # USER DEPENDENT
-s.setOutputDevice(4)  # USER DEPENDENT
+s.setOutputDevice(4)
+
 s.boot()
-
-
-# setup
-w = open("presets.txt", "w")  # opens file writer to save score
+w = open("presets.txt", "w")
+# Drops the gain by 20 dB.
+s.amp = 0.4
 
 while True:
-    selectedSound = r.randrange(0, 23, 1)  # selects sound to be played
-    direction = r.randrange(0, 2, 1)  # selects direction
-    modifier = r.uniform(0, 0.125)  # adds a little bit of variety in where the sound comes from
+    selectedSound = r.randrange(0, 22, 1)  # selects sound to be played
+    direction = r.randrange(0, 2, 1)
 
-    soundLeft = p.SfPlayer(sounds[selectedSound], loop=False)  # sets selected sound to be played
-    soundRight = p.SfPlayer(sounds[selectedSound], loop=False)
+    soundPlayer = p.SfPlayer(sounds[selectedSound], loop=False)
+    chBinaural = p.HRTF(soundPlayer, azimuth=directionValues[direction])
 
-    noiseVolume = 0.005 + score*0.001
-    if noiseVolume > 0.07:
-        noiseVolume = 0.07
-
-    difficultyVolume = score*0.01
-    if difficultyVolume > 0.1:
-        difficultyVolume = 0.1
-
-    noise = p.BrownNoise(noiseVolume).mix(2).out()
-    mixer = p.Mixer(outs=2, chnls=1)  # sets 2 outputs
-    mixer.addInput(voice=0, input=soundLeft)
-    mixer.addInput(voice=1, input=soundRight)
-
-    if direction == 0:  # sets volume for each side depending on direction
-        mixer.setAmp(vin=0,vout=0,amp=directionValues[direction][0] - modifier - difficultyVolume)
-        mixer.setAmp(vin=1,vout=1,amp=directionValues[direction][1] + modifier + difficultyVolume)
-    if direction == 1:
-        mixer.setAmp(vin=0,vout=0,amp=directionValues[direction][0] + modifier + difficultyVolume)
-        mixer.setAmp(vin=1,vout=1,amp=directionValues[direction][1] - modifier - difficultyVolume)
+    mixer = p.Mixer(outs=2,chnls=2)
+    mixer.addInput(0,chBinaural)
+    mixer.setAmp(0,0,0.9)
+    mixer.setAmp(0,1,0.9)
     mixer.out()
     s.start()
 
