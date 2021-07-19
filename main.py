@@ -31,9 +31,11 @@ s.amp = 0.4
 while True:
     selectedSound = r.randrange(0, 22, 1)  # selects sound to be played
     direction = r.randrange(0, 2, 1)
+    degreeModifier = r.randrange(-10, 10)
 
     soundPlayer = p.SfPlayer(sounds[selectedSound], loop=False)
-    chBinaural = p.HRTF(soundPlayer, azimuth=directionValues[direction])
+    chBinaural = p.HRTF(soundPlayer, azimuth=directionValues[direction] + degreeModifier)
+    print(directionValues[direction] + degreeModifier)
 
     mixer = p.Mixer(outs=2,chnls=2)
     mixer.addInput(0,chBinaural)
