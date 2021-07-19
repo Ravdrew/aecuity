@@ -64,9 +64,11 @@ while True:
         w.write(str(score))
         w.close()
         s.stop()
-        sys.exit()
+        break
     else:  # handles wrong answer
         print("\nAh, sorry, try again!")
         print(f"Your score was {score}! Nice job!\n")
         s.stop()
-        sys.exit()
+        break
+
+sys.exit()
