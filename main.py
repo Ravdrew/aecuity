@@ -3,8 +3,8 @@ import random as r
 
 f = open("presets.txt", "a")
 
-directionValues = (-90, 90)  # left, right
-numToDirection = ("left", "right")
+directionValues = (-90, 90, -45, 45, -135, 135)  # left, right, front left, front right, back left, back right
+numToDirection = ("l", "r", "fl", "fr", "bl", "br")
 sounds = ("plasticNoises.wav", "decafCoffeeMonoFinal.wav", "dogBark.wav", "pianoA.wav", "pianoB.wav", "pianoC.wav",
           "pianoD.wav", "pianoE.wav", "pianoF.wav", "pianoG.wav", "sinkRunning.wav", "showerRunning.wav",
           "gettingHome.wav", "longTimeNoSee.wav", "Hertz250.wav", "Hertz500.wav", "Hertz1000.wav", "Hertz2000.wav", "Hertz4000.wav",
@@ -19,36 +19,37 @@ else:
     score = 0
 print(f"Previous Score: {score}")
 
-s = p.Server(duplex=1, buffersize=1024, winhost='asio',nchnls=2)
+s = p.Server(duplex=1, buffersize=1024, winhost='asio', nchnls=2)
 s.setInputDevice(1)  # USER DEPENDENT
 s.setOutputDevice(4)
 
 s.boot()
 w = open("presets.txt", "w")
-# Drops the gain by 20 dB.
+
 s.amp = 0.4
 
 while True:
     selectedSound = r.randrange(0, 22, 1)  # selects sound to be played
-    direction = r.randrange(0, 2, 1)
-    degreeModifier = r.randrange(-10, 10)
+    direction = r.randrange(0, 6, 1)
+    degreeModifier = 0 # r.randrange(-10, 10)
 
     soundPlayer = p.SfPlayer(sounds[selectedSound], loop=False)
-    chBinaural = p.HRTF(soundPlayer, azimuth=directionValues[direction] + degreeModifier)
+    chBinaural = p.HRTF(soundPlayer, azimuth=directionValues[direction])
+    print(directionValues[direction])
 
     noiseVolume = 0.005 + score*0.001
     if noiseVolume > 0.07:
         noiseVolume = 0.07
 
     noise = p.BrownNoise(noiseVolume).mix(2).out()
-    mixer = p.Mixer(outs=2,chnls=2)
-    mixer.addInput(0,chBinaural)
-    mixer.setAmp(0,0,0.9)
-    mixer.setAmp(0,1,0.9)
+    mixer = p.Mixer(outs=2, chnls=2)
+    mixer.addInput(0, chBinaural)
+    mixer.setAmp(0, 0, 0.9)
+    mixer.setAmp(0, 1, 0.9)
     mixer.out()
     s.start()
 
-    guess = input("What direction is the sound coming from? (left/right/save): ")
+    guess = input("What direction is the sound coming from? (l/r/fl/fr/bl/br/save): ")
     if guess.lower() == numToDirection[direction]:  # checks if correct
         score += 1
         print("\nCongratulations! You are correct!")
@@ -67,4 +68,3 @@ while True:
         print("\nAh, sorry, try again!")
         print(f"Your score was {score}! Nice job!\n")
         exit()
-
