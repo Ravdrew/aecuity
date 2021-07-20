@@ -10,6 +10,7 @@ sounds = ("plasticNoises.wav", "decafCoffeeMonoFinal.wav", "dogBark.wav", "piano
           "pianoD.wav", "pianoE.wav", "pianoF.wav", "pianoG.wav", "sinkRunning.wav", "showerRunning.wav",
           "gettingHome.wav", "longTimeNoSee.wav", "Hertz250.wav", "Hertz500.wav", "Hertz1000.wav", "Hertz2000.wav", "Hertz4000.wav",
           "Hertz6000.wav", "roomba.wav", "cars.wav")
+count = 0
 
 with open("presets.txt", "r") as reader:  # opens file reader to pull saved score
     output = reader.readline()
@@ -18,7 +19,6 @@ if output != "":
     score = int(output)
 else:
     score = 0
-print(f"Previous Score: {score}")
 
 s = p.Server(duplex=1, buffersize=1024, winhost='asio', nchnls=2)
 s.setInputDevice(1)  # USER DEPENDENT
@@ -29,9 +29,9 @@ w = open("presets.txt", "w")
 
 s.amp = 0.45
 
-print("Modes:")
+print("\nSelect a Mode:")
 print("0: Training Mode")
-print("1: Not training mode \n")
+print("1: Scoring Mode \n")
 mode = int(input("Please chose a mode: "))
 
 while True:
@@ -77,15 +77,22 @@ while True:
             s.stop()
             break
     elif mode == 0:
-        possible_inputs = ['l', 'r', 'fl', 'fr', 'bl', 'br']
-        direction = input("Type in l/r/fl/fr/bl/br to select which direction you would like to practice, or q to quit: ")
-        if direction in possible_inputs:
-            soundPlayer = p.SfPlayer(sounds[15], loop=True) 
-            chBinaural = p.HRTF(soundPlayer, azimuth=directionValues[numToDirection.index(direction)])
-        elif direction.lower() == "q":
-            continue
+        userDirection = input("Type in l/r/fl/fr/bl/br to select which direction you would like to practice, or q to quit: ")
+        if(count > 0): # stops pyo warning
+            s.stop()
+        if userDirection in numToDirection:
+            count += 1
+            userSoundPlayer = p.SfPlayer(sounds[15], loop=True)
+            userChBinaural = p.HRTF(userSoundPlayer, azimuth=directionValues[numToDirection.index(userDirection)])
+            userMixer = p.Mixer(outs=2, chnls=2)
+            userMixer.addInput(0, userChBinaural)
+            userMixer.setAmp(0, 0, 0.9)
+            userMixer.setAmp(0, 1, 0.9)
+            userMixer.out()
+            s.start()
+        elif userDirection.lower() == "q":
+            sys.exit()
         else:
             print("Invalid input: Try again")
 
 sys.exit()
-
