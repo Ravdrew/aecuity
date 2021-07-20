@@ -7,9 +7,9 @@ f = open("presets.txt", "a")
 boldOpen = "\033[1m"
 boldClose = "\033[0m"
 
-directionValues = (-90, 90, -15, 15, -140, 140)  # left, right, front left, front right, back left, back right
-numToDirection = ("l", "r", "fl", "fr", "bl", "br")
-numToFullString = ("LEFT", "RIGHT", "FRONT LEFT", "FRONT RIGHT", "BACK LEFT", "BACK RIGHT")
+directionValues = (-90, 90, -150, 150, 0)  # left, right, front left, front right, back left, back right
+numToDirection = ("l", "r", "bl", "br", "f")
+numToFullString = ("LEFT", "RIGHT", "BACK LEFT", "BACK RIGHT", "FRONT")
 sounds = ("plasticNoises.wav", "decafCoffeeMonoFinal.wav", "dogBark.wav", "pianoA.wav", "pianoB.wav", "pianoC.wav",
           "pianoD.wav", "pianoE.wav", "pianoF.wav", "pianoG.wav", "sinkRunning.wav", "showerRunning.wav",
           "gettingHome.wav", "longTimeNoSee.wav", "Hertz250.wav", "Hertz500.wav", "Hertz1000.wav", "Hertz2000.wav", "Hertz4000.wav",
@@ -41,7 +41,7 @@ mode = int(input("Please chose a mode: "))
 while True:
     if mode == 1:
         selectedSound = r.randrange(0, 22, 1)  # selects sound to be played
-        direction = r.randrange(0, 6, 1)
+        direction = r.randrange(0, 5, 1)
         degreeModifier = 0 # r.randrange(-10, 10)
 
         soundPlayer = p.SfPlayer(sounds[selectedSound], loop=False)
@@ -60,7 +60,7 @@ while True:
         mixer.out()
         s.start()
 
-        guess = input("What direction is the sound coming from? (l/r/fl/fr/bl/br/save): ")
+        guess = input("What direction is the sound coming from? (l/r/bl/br/f/save): ")
         if guess.lower() == numToDirection[direction]:  # checks if correct
             score += 1
             print("\nCongratulations! You are correct!")
@@ -82,7 +82,7 @@ while True:
             s.stop()
             break
     elif mode == 0:
-        userDirection = input("Type in l/r/fl/fr/bl/br to select which direction you would like to practice, or q to quit: ")
+        userDirection = input("Type in l/r/bl/br/f to select which direction you would like to practice, or q to quit: ")
         if count > 0: # stops pyo warning
             s.stop()
         if userDirection in numToDirection:
