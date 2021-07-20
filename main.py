@@ -4,8 +4,12 @@ import sys
 
 f = open("presets.txt", "a")
 
+boldOpen = "\033[1m"
+boldClose = "\033[0m"
+
 directionValues = (-90, 90, -25, 25, -135, 135)  # left, right, front left, front right, back left, back right
 numToDirection = ("l", "r", "fl", "fr", "bl", "br")
+numToFullString = ("LEFT", "RIGHT", "FRONT LEFT", "FRONT RIGHT", "BACK LEFT", "BACK RIGHT")
 sounds = ("plasticNoises.wav", "decafCoffeeMonoFinal.wav", "dogBark.wav", "pianoA.wav", "pianoB.wav", "pianoC.wav",
           "pianoD.wav", "pianoE.wav", "pianoF.wav", "pianoG.wav", "sinkRunning.wav", "showerRunning.wav",
           "gettingHome.wav", "longTimeNoSee.wav", "Hertz250.wav", "Hertz500.wav", "Hertz1000.wav", "Hertz2000.wav", "Hertz4000.wav",
@@ -42,7 +46,7 @@ while True:
 
         soundPlayer = p.SfPlayer(sounds[selectedSound], loop=False)
         chBinaural = p.HRTF(soundPlayer, azimuth=directionValues[direction])
-        print(directionValues[direction])
+        # print(directionValues[direction])
 
         noiseVolume = 0.005 + score*0.001
         if noiseVolume > 0.07:
@@ -72,13 +76,14 @@ while True:
             s.stop()
             break
         else:  # handles wrong answer
-            print("\nAh, sorry, try again!")
+            print("\nAh, sorry, the direction was: ")
+            print(boldOpen + numToFullString[direction] + boldClose)
             print(f"Your score was {score}! Nice job!\n")
             s.stop()
             break
     elif mode == 0:
         userDirection = input("Type in l/r/fl/fr/bl/br to select which direction you would like to practice, or q to quit: ")
-        if(count > 0): # stops pyo warning
+        if count > 0: # stops pyo warning
             s.stop()
         if userDirection in numToDirection:
             count += 1
