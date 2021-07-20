@@ -7,7 +7,7 @@ f = open("presets.txt", "a")
 boldOpen = "\033[1m"
 boldClose = "\033[0m"
 
-directionValues = (-90, 90, -150, 150, 0)  # left, right, front left, front right, back left, back right
+directionValues = (-90, 90, -140, 140, 0)  # left, right, front left, front right, back left, back right
 numToDirection = ("l", "r", "bl", "br", "f")
 numToFullString = ("LEFT", "RIGHT", "BACK LEFT", "BACK RIGHT", "FRONT")
 sounds = ("plasticNoises.wav", "decafCoffeeMonoFinal.wav", "dogBark.wav", "pianoA.wav", "pianoB.wav", "pianoC.wav",
