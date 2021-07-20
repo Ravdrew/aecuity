@@ -4,7 +4,7 @@ import sys
 
 f = open("presets.txt", "a")
 
-directionValues = (-90, 90, -45, 45, -135, 135)  # left, right, front left, front right, back left, back right
+directionValues = (-90, 90, -25, 25, -135, 135)  # left, right, front left, front right, back left, back right
 numToDirection = ("l", "r", "fl", "fr", "bl", "br")
 sounds = ("plasticNoises.wav", "decafCoffeeMonoFinal.wav", "dogBark.wav", "pianoA.wav", "pianoB.wav", "pianoC.wav",
           "pianoD.wav", "pianoE.wav", "pianoF.wav", "pianoG.wav", "sinkRunning.wav", "showerRunning.wav",
@@ -82,7 +82,7 @@ while True:
             s.stop()
         if userDirection in numToDirection:
             count += 1
-            userSoundPlayer = p.SfPlayer(sounds[15], loop=True)
+            userSoundPlayer = p.SfPlayer(sounds[8], loop=True)
             userChBinaural = p.HRTF(userSoundPlayer, azimuth=directionValues[numToDirection.index(userDirection)])
             userMixer = p.Mixer(outs=2, chnls=2)
             userMixer.addInput(0, userChBinaural)
