@@ -14,7 +14,7 @@ sounds = ("plasticNoises.wav", "decafCoffeeMonoFinal.wav", "dogBark.wav", "piano
           "pianoD.wav", "pianoE.wav", "pianoF.wav", "pianoG.wav", "sinkRunning.wav", "showerRunning.wav",
           "new_longtime.wav", "overhere.wav", "Hertz250.wav", "Hertz500.wav", "Hertz1000.wav", "Hertz2000.wav", "Hertz4000.wav",
           "Hertz6000.wav", "roomba.wav", "cars.wav", "paperCrumple.wav", "windPaper.wav", "knocking.wav", "clapping.wav",
-          "DroppingBooksonWood.wav", "HelloThereAllison.wav", "sister-002.wav")
+          "DroppingBooksonWood.wav", "HelloThereAllison.wav", "sister-002.wav", "driving.wav", "honk.wav")
 count = 0
 
 with open("presets.txt", "r") as reader:  # opens file reader to pull saved score
@@ -41,7 +41,7 @@ mode = int(input("Please chose a mode: "))
 
 while True:
     if mode == 1:
-        selectedSound = r.randrange(0, 29, 1)  # selects sound to be played
+        selectedSound = r.randrange(0, 31, 1)  # selects sound to be played
         direction = r.randrange(0, 5, 1)
         degreeModifier = 0  # r.randrange(-10, 10)
 
@@ -96,7 +96,7 @@ while True:
             s.stop()
         if userDirection in numToDirection:
             count += 1
-            userSoundPlayer = p.SfPlayer(sounds[1], loop=True)
+            userSoundPlayer = p.SfPlayer(sounds[29], loop=True)
             if numToDirection.index(userDirection) == 2 or numToDirection.index(userDirection) == 3:
                 userlowpassFil = p.Tone(userSoundPlayer, 1880)
                 userChBinaural = p.HRTF(userlowpassFil, azimuth=directionValues[numToDirection.index(userDirection)])
