@@ -40,7 +40,7 @@ mode = int(input("Please chose a mode: "))
 
 while True:
     if mode == 1:
-        selectedSound = r.randrange(20, 26, 1)  # selects sound to be played
+        selectedSound = r.randrange(0, 26, 1)  # selects sound to be played
         direction = r.randrange(0, 5, 1)
         degreeModifier = 0  # r.randrange(-10, 10)
 
