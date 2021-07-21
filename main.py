@@ -45,7 +45,13 @@ while True:
         degreeModifier = 0  # r.randrange(-10, 10)
 
         soundPlayer = p.SfPlayer(sounds[selectedSound], loop=False)
-        chBinaural = p.HRTF(soundPlayer, azimuth=directionValues[direction])
+        if direction == 2 or direction == 3:
+            print("lowpass")
+            lowpassFil = p.Tone(soundPlayer, 1880)
+            chBinaural = p.HRTF(lowpassFil, azimuth=directionValues[direction])
+        else:
+            print("no lowpass")
+            chBinaural = p.HRTF(soundPlayer, azimuth=directionValues[direction])
         # print(directionValues[direction])
 
         noiseVolume = 0.005 + score*0.001
@@ -66,7 +72,6 @@ while True:
             print("\nCongratulations! You are correct!")
             print(f"Your score is: {score}\n")
             s.stop()
-            s.shutdown()
             continue
         elif guess.lower() == "save":  # handles save option
             print("Saving your score, good work!")
@@ -82,6 +87,7 @@ while True:
             print(boldOpen + numToFullString[direction] + boldClose)
             print(f"Your score was {score}! Nice job!\n")
             s.stop()
+            s.shutdown()
             break
     elif mode == 0:
         userDirection = input("Type in l/r/bl/br/f to select which direction you would like to practice, or q to quit: ")
@@ -89,8 +95,12 @@ while True:
             s.stop()
         if userDirection in numToDirection:
             count += 1
-            userSoundPlayer = p.SfPlayer(sounds[8], loop=True)
-            userChBinaural = p.HRTF(userSoundPlayer, azimuth=directionValues[numToDirection.index(userDirection)])
+            userSoundPlayer = p.SfPlayer(sounds[1], loop=True)
+            if numToDirection.index(userDirection) == 2 or numToDirection.index(userDirection) == 3:
+                userlowpassFil = p.Tone(userSoundPlayer, 1880)
+                userChBinaural = p.HRTF(userlowpassFil, azimuth=directionValues[numToDirection.index(userDirection)])
+            else:
+                userChBinaural = p.HRTF(userSoundPlayer, azimuth=directionValues[numToDirection.index(userDirection)])
             userMixer = p.Mixer(outs=2, chnls=2)
             userMixer.addInput(0, userChBinaural)
             userMixer.setAmp(0, 0, 0.9)
