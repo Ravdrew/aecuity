@@ -12,7 +12,7 @@ numToDirection = ("l", "r", "bl", "br", "f")
 numToFullString = ("LEFT", "RIGHT", "BACK LEFT", "BACK RIGHT", "FRONT")
 sounds = ("plasticNoises.wav", "decafCoffeeMonoFinal.wav", "dogBark.wav", "pianoA.wav", "pianoB.wav", "pianoC.wav",
           "pianoD.wav", "pianoE.wav", "pianoF.wav", "pianoG.wav", "sinkRunning.wav", "showerRunning.wav",
-          "gettingHome.wav", "longTimeNoSee.wav", "Hertz250.wav", "Hertz500.wav", "Hertz1000.wav", "Hertz2000.wav", "Hertz4000.wav",
+          "new_longtime.wav", "overhere.wav", "Hertz250.wav", "Hertz500.wav", "Hertz1000.wav", "Hertz2000.wav", "Hertz4000.wav",
           "Hertz6000.wav", "roomba.wav", "cars.wav")
 count = 0
 
@@ -42,7 +42,7 @@ while True:
     if mode == 1:
         selectedSound = r.randrange(0, 22, 1)  # selects sound to be played
         direction = r.randrange(0, 5, 1)
-        degreeModifier = 0 # r.randrange(-10, 10)
+        degreeModifier = 0  # r.randrange(-10, 10)
 
         soundPlayer = p.SfPlayer(sounds[selectedSound], loop=False)
         chBinaural = p.HRTF(soundPlayer, azimuth=directionValues[direction])
@@ -66,6 +66,7 @@ while True:
             print("\nCongratulations! You are correct!")
             print(f"Your score is: {score}\n")
             s.stop()
+            s.shutdown()
             continue
         elif guess.lower() == "save":  # handles save option
             print("Saving your score, good work!")
@@ -74,6 +75,7 @@ while True:
             w.write(str(score))
             w.close()
             s.stop()
+            s.shutdown()
             break
         else:  # handles wrong answer
             print("\nAh, sorry, the direction was: ")
@@ -83,7 +85,7 @@ while True:
             break
     elif mode == 0:
         userDirection = input("Type in l/r/bl/br/f to select which direction you would like to practice, or q to quit: ")
-        if count > 0: # stops pyo warning
+        if count > 0:  # stops pyo warning
             s.stop()
         if userDirection in numToDirection:
             count += 1
