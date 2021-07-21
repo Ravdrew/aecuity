@@ -46,11 +46,11 @@ while True:
 
         soundPlayer = p.SfPlayer(sounds[selectedSound], loop=False)
         if direction == 2 or direction == 3:
-            print("lowpass")
+            # print("lowpass")
             lowpassFil = p.Tone(soundPlayer, 1880)
             chBinaural = p.HRTF(lowpassFil, azimuth=directionValues[direction])
         else:
-            print("no lowpass")
+            # print("no lowpass")
             chBinaural = p.HRTF(soundPlayer, azimuth=directionValues[direction])
         # print(directionValues[direction])
 
