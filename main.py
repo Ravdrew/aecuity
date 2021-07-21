@@ -14,7 +14,7 @@ sounds = ("plasticNoises.wav", "decafCoffeeMonoFinal.wav", "dogBark.wav", "piano
           "pianoD.wav", "pianoE.wav", "pianoF.wav", "pianoG.wav", "sinkRunning.wav", "showerRunning.wav",
           "new_longtime.wav", "overhere.wav", "Hertz250.wav", "Hertz500.wav", "Hertz1000.wav", "Hertz2000.wav", "Hertz4000.wav",
           "Hertz6000.wav", "roomba.wav", "cars.wav", "paperCrumple.wav", "windPaper.wav", "knocking.wav", "clapping.wav",
-          "DroppingBooksonWood.wav")
+          "DroppingBooksonWood.wav", "HelloThereAllison.wav", "sister-002.wav")
 count = 0
 
 with open("presets.txt", "r") as reader:  # opens file reader to pull saved score
@@ -41,7 +41,7 @@ mode = int(input("Please chose a mode: "))
 
 while True:
     if mode == 1:
-        selectedSound = r.randrange(0, 27, 1)  # selects sound to be played
+        selectedSound = r.randrange(0, 29, 1)  # selects sound to be played
         direction = r.randrange(0, 5, 1)
         degreeModifier = 0  # r.randrange(-10, 10)
 
