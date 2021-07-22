@@ -10,11 +10,14 @@ boldClose = "\033[0m"
 directionValues = (-90, 90, -140, 140, 0)  # left, right, front left, front right, back left, back right
 numToDirection = ("l", "r", "bl", "br", "f")
 numToFullString = ("LEFT", "RIGHT", "BACK LEFT", "BACK RIGHT", "FRONT")
-sounds = ("plasticNoises.wav", "decafCoffeeMonoFinal.wav", "dogBark.wav", "pianoA.wav", "pianoB.wav", "pianoC.wav",
-          "pianoD.wav", "pianoE.wav", "pianoF.wav", "pianoG.wav", "sinkRunning.wav", "showerRunning.wav",
-          "new_longtime.wav", "overhere.wav", "Hertz250.wav", "Hertz500.wav", "Hertz1000.wav", "Hertz2000.wav", "Hertz4000.wav",
-          "Hertz6000.wav", "roomba.wav", "cars.wav", "paperCrumple.wav", "windPaper.wav", "knocking.wav", "clapping.wav",
-          "DroppingBooksonWood.wav", "HelloThereAllison.wav", "sister-002.wav", "driving.wav", "honk.wav")
+sounds = ("sounds/plasticNoises.wav", "sounds/decafCoffeeMonoFinal.wav", "sounds/dogBark.wav", "sounds/pianoA.wav",
+          "sounds/pianoB.wav", "sounds/pianoC.wav", "sounds/pianoD.wav", "sounds/pianoE.wav", "sounds/pianoF.wav",
+          "sounds/pianoG.wav", "sounds/sinkRunning.wav", "sounds/showerRunning.wav", "sounds/new_longtime.wav",
+          "sounds/overhere.wav", "sounds/Hertz250.wav", "sounds/Hertz500.wav", "sounds/Hertz1000.wav",
+          "sounds/Hertz2000.wav", "sounds/Hertz4000.wav", "sounds/Hertz6000.wav", "sounds/roomba.wav", "sounds/cars.wav",
+          "sounds/paperCrumple.wav", "sounds/windPaper.wav", "sounds/knocking.wav", "sounds/clapping.wav",
+          "sounds/DroppingBooksonWood.wav", "sounds/HelloThereAllison.wav", "sounds/sister-002.wav", "sounds/driving.wav",
+          "sounds/honk.wav")
 count = 0
 
 with open("presets.txt", "r") as reader:  # opens file reader to pull saved score
@@ -96,7 +99,7 @@ while True:
             s.stop()
         if userDirection in numToDirection:
             count += 1
-            userSoundPlayer = p.SfPlayer(sounds[29], loop=True)
+            userSoundPlayer = p.SfPlayer(sounds[1], loop=True)
             if numToDirection.index(userDirection) == 2 or numToDirection.index(userDirection) == 3:
                 userlowpassFil = p.Tone(userSoundPlayer, 1880)
                 userChBinaural = p.HRTF(userlowpassFil, azimuth=directionValues[numToDirection.index(userDirection)])
